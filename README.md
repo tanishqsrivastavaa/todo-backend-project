@@ -2,6 +2,12 @@
 
 A comprehensive and production-ready todo backend API with CRUD operations, user authentication, Google OAuth integration, and AWS deployment configuration.
 
+## 🚀 Quick Links
+
+- **[Quick Setup Guide](QUICKSTART.md)** - Get started in minutes
+- **[AWS Deployment Guide](AWS_DEPLOYMENT.md)** - Deploy to production
+- **[API Documentation](#api-endpoints)** - Full API reference
+
 ## Features
 
 - ✅ **CRUD Operations**: Complete Create, Read, Update, Delete functionality for todos
@@ -282,12 +288,17 @@ todo-backend-project/
 
 ## Security Features
 
-- **Password Hashing**: Bcrypt with salt rounds
-- **JWT Authentication**: Secure token-based auth
-- **Helmet**: Security headers
-- **CORS**: Configurable cross-origin requests
-- **Input Validation**: Express-validator
-- **MongoDB Injection Protection**: Mongoose sanitization
+- **Password Hashing**: Bcrypt with salt rounds for secure password storage
+- **JWT Authentication**: Secure token-based authentication with configurable expiration
+- **Helmet**: Security headers to protect against common web vulnerabilities
+- **CORS**: Configurable cross-origin request handling
+- **Rate Limiting**: Protection against brute-force attacks and DoS
+  - Authentication endpoints: 5 attempts per 15 minutes
+  - Todo creation: 10 todos per minute
+  - General API: 100 requests per 15 minutes
+- **Input Validation**: Express-validator for request validation
+- **NoSQL Injection Protection**: express-mongo-sanitize + Mongoose schema validation
+- **ReDoS Protection**: Optimized regular expressions to prevent denial-of-service
 
 ## Environment Variables
 
@@ -361,6 +372,24 @@ Common HTTP status codes:
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+## Testing
+
+The project includes a test script to verify API endpoints:
+
+```bash
+# Make sure the server is running first
+npm start
+
+# In another terminal, run the test script
+./test-api.sh
+```
+
+The test script will verify:
+- Server health check
+- API endpoints existence
+- Authentication requirements
+- Rate limiting functionality
 
 ## License
 
