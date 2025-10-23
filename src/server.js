@@ -2,9 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 const passport = require('./config/passport');
 const connectDB = require('./config/database');
 const errorHandler = require('./middleware/error');
+const { apiLimiter } = require('./middleware/rateLimiter');
 const authRoutes = require('./routes/auth');
 const todoRoutes = require('./routes/todos');
 
@@ -16,9 +18,15 @@ const app = express();
 // Security middleware
 app.use(helmet());
 
+// Rate limiting
+app.use('/api/', apiLimiter);
+
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Data sanitization against NoSQL injection
+app.use(mongoSanitize());
 
 // CORS middleware
 app.use(
